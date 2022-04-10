@@ -85,3 +85,8 @@ class Dataset:
     def _check_df(self, df):
         if not isinstance(df, pd.DataFrame):
             raise TypeError('df must be an instance of pandas.DataFrame')
+
+    # TODO: implement subscripting: ds['column'] (optimization)
+    # TODO: docstrings
+    # TODO: a list of assignable roles
+    # TODO: check for duplicates in index, feats, etc.
