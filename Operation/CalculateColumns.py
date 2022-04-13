@@ -2,7 +2,6 @@ from dstools.Dataset.Dataset import Dataset
 from dstools.Operation.OperationInterface import OperationInterface
 
 class CalculateColumns(OperationInterface):
-
     def __init__(self, expressions, roles=None, name='CalculateColumn'):
         self.expressions = expressions
         self.roles = roles

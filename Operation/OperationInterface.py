@@ -22,3 +22,5 @@ class OperationInterface(metaclass=ABCMeta):
             if argname not in kwargs:
                 kwargs[argname] = getattr(ds, argname)
         return Dataset(**kwargs)
+
+    # TODO: implement __str__ and __repr__
