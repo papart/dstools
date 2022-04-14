@@ -9,6 +9,14 @@ class OperationInterface(metaclass=ABCMeta):
     def apply(self, ds: Dataset) -> Dataset:
         pass
 
+    @abstractmethod
+    def fit(self, ds: Dataset):
+        pass
+
+    def fit_apply(self, ds: Dataset) -> Dataset:
+        self.fit(ds)
+        return self.apply(ds)
+
     def _recreate_dataset(self, ds: Dataset, **kwargs) -> Dataset:
         """
         Create a new dataset on the basis of the given one.
