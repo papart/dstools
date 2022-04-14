@@ -6,7 +6,7 @@ class Dataset:
             index=None, feats=None, targets=None, predicts=None
         ):
         self._check_df(df)
-        self._df = df
+        self._df = df.copy()
         self.set_col_roles(
             index=index, feats=feats, targets=targets, predicts=predicts)
 
