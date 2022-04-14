@@ -21,6 +21,9 @@ class CalculateColumns(OperationInterface):
         new_col_roles = self._get_new_col_roles(ds)
         return self._recreate_dataset(ds, df=df, **new_col_roles)
 
+    def fit(self, ds: Dataset):
+        pass
+
     def _get_new_col_roles(self, ds):
         # TODO: refactoring
         col_roles = {

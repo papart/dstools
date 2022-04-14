@@ -11,6 +11,16 @@ class OperationPipeline(OperationInterface):
             ds = op.apply(ds)
         return ds
 
+    def fit(self, ds: Dataset):
+        for op in self.stages[:-1]:
+            ds = op.fit_apply(ds)
+        self.stages[-1].fit()
+
+    def fit_apply(self, ds: Dataset) -> Dataset:
+        for op in self.stages:
+            ds = op.fit_apply(ds)
+        return ds        
+
     @property
     def stages(self):
         return self._stages
