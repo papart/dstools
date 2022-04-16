@@ -90,3 +90,4 @@ class Dataset:
     # TODO: docstrings
     # TODO: a list of assignable roles
     # TODO: check for duplicates in index, feats, etc.
+    # TODO: get role by column name
