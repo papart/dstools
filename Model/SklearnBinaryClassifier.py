@@ -26,3 +26,5 @@ class SklearnBinaryClassifier(SklearnMulticlassClassifier):
     @property
     def class_labels(self):
         return [0, 1]
+
+    # TODO: docstrings

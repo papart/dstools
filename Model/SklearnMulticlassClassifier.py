@@ -25,3 +25,5 @@ class SklearnMulticlassClassifier(SklearnModel):
     @property
     def class_labels(self):
         return list(range(len(self.predictions)))
+
+    # TODO: docstrings
