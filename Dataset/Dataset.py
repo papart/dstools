@@ -86,6 +86,12 @@ class Dataset:
         if not isinstance(df, pd.DataFrame):
             raise TypeError('df must be an instance of pandas.DataFrame')
 
+    def __getitem__(self, key):
+        if not isinstance(key, str):
+            raise TypeError("Indexing key must be a string")
+        # TODO: write tests on this functionality
+        return self._df[key].copy()
+
     # TODO: implement subscripting: ds['column'] (optimization)
     # TODO: docstrings
     # TODO: a list of assignable roles
