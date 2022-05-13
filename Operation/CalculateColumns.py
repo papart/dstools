@@ -1,25 +1,27 @@
 from dstools.Dataset.Dataset import Dataset
 from dstools.Operation.OperationInterface import OperationInterface
+import pandas as pd
 
 class CalculateColumns(OperationInterface):
     def __init__(self, expressions, roles=None, name='CalculateColumn'):
+        # expressions - dict(column_name: value).
+        # value is either a pd.Series, or a function: fn(ds: Dataset) -> pd.Series
         self.expressions = expressions
         self.roles = roles
         super().__init__(name=name)
 
     def apply(self, ds: Dataset) -> Dataset:
-        df = ds.df # this returns a copy
-        # Calculate all expressions on the old dataframe
-        results = {}
+        df_new = ds.df # this returns a copy
         for column, expr in self.expressions.items():
             if callable(expr):
-                expr = expr(df)
-            results[column] = expr
-        # Write all the calculated expressions in the dataframe
-        for column, res in results.items():
-            df[column] = res
+                expr = expr(ds) # calculate on the old (!) dataframe
+            if not isinstance(expr, pd.Series):
+                raise TypeError(
+                    f"Calculated expression for column {column} has type {type(expr)}, "
+                    "but must be a pandas Series")
+            df_new[column] = expr
         new_col_roles = self._get_new_col_roles(ds)
-        return self._recreate_dataset(ds, df=df, **new_col_roles)
+        return self._recreate_dataset(ds, df=df_new, **new_col_roles)
 
     def fit(self, ds: Dataset):
         pass
@@ -51,3 +53,4 @@ class CalculateColumns(OperationInterface):
 
     # TODO: docstrings
     # TODO: check if roles has a valid value
+    # TODO: check types in expressions
