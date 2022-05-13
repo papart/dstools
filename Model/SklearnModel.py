@@ -22,16 +22,17 @@ class SklearnModel(ModelInterface):
         self._core_model.fit(X, Y)
         return self
 
-    # TODO (idea): _actual_fit(), _actual_predict() - for subclasses
-
     def predict(self, ds: Dataset):
         self._check_columns_in_ds(ds, 'feats')
         self._check_no_preds_in_ds_index(ds)
         df = ds.df
         X = df[ds.feats][self.feats]
-        P = pd.DataFrame(self._core_model.predict(X), columns=self.predicts)
+        P = pd.DataFrame(self._core_model_predict(X), columns=self.predicts)
         new_df = pd.concat([df[ds.index], P], axis=1)
         return Dataset(df=new_df, index=ds.index, predicts=self.predicts)
+
+    def _core_model_predict(self, X: pd.DataFrame):
+        return self._core_model.predict(X)
 
     def init_new(self, feats=None, hyperparams=None):
         init_args = {
