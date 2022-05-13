@@ -23,10 +23,10 @@ class OperationInterface(metaclass=ABCMeta):
         :param ds: Dataset, which performs as a basis for a new one.
         :param kwargs: dictionary {parameter:value}, which is used 
         to initialize for the resulting dataset.
-        Supported parameters: df, index, feats, targets, predicts.
+        Supported parameters: df, index, features, targets, predictions.
         If a parameter is not provided, its value is taken from the given dataset ds.
         """
-        for argname in ['df', 'index', 'feats', 'targets', 'predicts']:
+        for argname in ['df', 'index', 'features', 'targets', 'predictions']:
             if argname not in kwargs:
                 kwargs[argname] = getattr(ds, argname)
         return Dataset(**kwargs)

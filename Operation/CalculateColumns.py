@@ -28,7 +28,7 @@ class CalculateColumns(OperationInterface):
         # TODO: refactoring
         col_roles = {
             role: getattr(ds, role) 
-            for role in ['index', 'feats', 'targets', 'predicts']
+            for role in ['index', 'features', 'targets', 'predictions']
         }
         if (self.roles is None) or (isinstance(self.roles, str)):
             assigned_roles_dict = {col: self.roles for col in self.expressions.keys()}
@@ -50,3 +50,4 @@ class CalculateColumns(OperationInterface):
         return col_roles
 
     # TODO: docstrings
+    # TODO: check if roles has a valid value

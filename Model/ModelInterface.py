@@ -15,12 +15,12 @@ class ModelInterface(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def init_new(self, feats, hyperparams) -> 'ModelInterface':
+    def init_new(self, features, hyperparams) -> 'ModelInterface':
         pass
 
     @property
     @abstractmethod
-    def feats(self) -> list:
+    def features(self) -> list:
         pass
     
     @property
@@ -30,7 +30,7 @@ class ModelInterface(metaclass=ABCMeta):
 
     @property
     @abstractmethod
-    def predicts(self) -> list:
+    def predictions(self) -> list:
         pass
 
     @property
@@ -41,11 +41,11 @@ class ModelInterface(metaclass=ABCMeta):
     # hyperparams
     # base_model_class
     # get_base_model()
-    # feats
+    # features
     # targets
-    # predicts?
-    # TODO: properties for feats, targets, predicts
-        # df = df[self.feats + self.targets]
+    # predictions?
+    # TODO: properties for features, targets, predictions
+        # df = df[self.features + self.targets]
         # return self._actual_fit(df)
     # reinit()
 

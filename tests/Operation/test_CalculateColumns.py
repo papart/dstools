@@ -14,7 +14,7 @@ class TestCalculateColumns:
             lambda x: x['feat0'] + x['target0']
         ]
     )
-    @pytest.mark.parametrize('role', [None, 'index', 'feats', 'targets', 'predicts'])
+    @pytest.mark.parametrize('role', [None, 'index', 'features', 'targets', 'predictions'])
     def test_new_col(self, dataset, expr, role):
         ds = dataset
         op = CalculateColumns({'new_col': expr}, roles=role)
@@ -37,12 +37,12 @@ class TestCalculateColumns:
             lambda x: x['feat0'] + x['target0']
         ]
     )
-    @pytest.mark.parametrize('role', [None, 'index', 'feats', 'targets', 'predicts'])
+    @pytest.mark.parametrize('role', [None, 'index', 'features', 'targets', 'predictions'])
     def test_overwrite_col(self, dataset, expr, role, column):
         ds = dataset
         op = CalculateColumns({column: expr}, roles=role)
         old_role = None
-        for r in ['index', 'feats', 'targets', 'predicts']:
+        for r in ['index', 'features', 'targets', 'predictions']:
             if column in getattr(ds, r):
                 old_role = r
 

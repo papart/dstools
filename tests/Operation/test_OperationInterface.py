@@ -19,12 +19,12 @@ class TestOperationInterface:
         with pytest.raises(TypeError):
             op = OperationInterface()
 
-    @pytest.mark.parametrize('role_changed', ['index', 'feats', 'targets', 'predicts'])
+    @pytest.mark.parametrize('role_changed', ['index', 'features', 'targets', 'predictions'])
     def test_recreate_dataset_change_col_roles(self, dataset, role_changed):
         ds = dataset
         op = DummyOperation()
         ds_new = op._recreate_dataset(ds, **{role_changed: ['other0']})
-        for role in ['index', 'feats', 'targets', 'predicts']:
+        for role in ['index', 'features', 'targets', 'predictions']:
             if role != role_changed:
                 assert getattr(ds, role) == getattr(ds_new, role)
         assert getattr(ds_new, role_changed) == ['other0']
@@ -38,7 +38,7 @@ class TestOperationInterface:
         ds_new = op._recreate_dataset(ds, df=ds.df[new_cols])
 
         assert ds_new.columns == new_cols
-        for role in ['index', 'feats', 'targets', 'predicts']:
+        for role in ['index', 'features', 'targets', 'predictions']:
             assert getattr(ds, role) == getattr(ds_new, role)
         assert ds_new.othercols == []
         assert_frame_equal(ds_new.df, ds.df[new_cols])

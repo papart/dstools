@@ -13,24 +13,24 @@ class TestDataset:
 
     def test_init(self, pandas_df_with_col_roles):
         df, role_cols = pandas_df_with_col_roles
-        ds = Dataset(df, index=role_cols['index'], feats=role_cols['feats'], 
-            targets=role_cols['targets'], predicts=role_cols['predicts'])
+        ds = Dataset(df, index=role_cols['index'], features=role_cols['features'], 
+            targets=role_cols['targets'], predictions=role_cols['predictions'])
         
         assert ds.columns == list(df.columns)
         
-        for role in ['index', 'feats', 'targets', 'predicts']:
+        for role in ['index', 'features', 'targets', 'predictions']:
             assert role_cols[role] == getattr(ds, role)
         
         set_othercols = set(df.columns)
-        for role in ['index', 'feats', 'targets', 'predicts']:
+        for role in ['index', 'features', 'targets', 'predictions']:
             set_othercols -= set(role_cols[role])
         assert set(ds.othercols) == set_othercols 
 
     @pytest.mark.parametrize('conflict_pair',
         [
             (role1, role2)
-            for i, role1 in enumerate(['index', 'feats', 'targets', 'predicts'])
-            for j, role2 in enumerate(['index', 'feats', 'targets', 'predicts'])
+            for i, role1 in enumerate(['index', 'features', 'targets', 'predictions'])
+            for j, role2 in enumerate(['index', 'features', 'targets', 'predictions'])
             if i < j
         ]
     )

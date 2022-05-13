@@ -3,12 +3,12 @@ import pandas as pd
 class Dataset:
     def __init__(self, 
             df, 
-            index=None, feats=None, targets=None, predicts=None
+            index=None, features=None, targets=None, predictions=None
         ):
         self._check_df(df)
         self._df = df.copy()
         self.set_col_roles(
-            index=index, feats=feats, targets=targets, predicts=predicts)
+            index=index, features=features, targets=targets, predictions=predictions)
 
     @property
     def df(self):
@@ -21,11 +21,11 @@ class Dataset:
         self._df = val    
 
     def set_col_roles(self, **col_roles):
-        for role in ['index', 'feats', 'targets', 'predicts']:
+        for role in ['index', 'features', 'targets', 'predictions']:
             if col_roles[role] is None:
                 col_roles[role] = []
         self._check_col_roles_consistent(**col_roles)
-        for role in ['index', 'feats', 'targets', 'predicts']:
+        for role in ['index', 'features', 'targets', 'predictions']:
             if role in col_roles:
                 setattr(self, f'_{role}', col_roles[role])
 
@@ -38,16 +38,16 @@ class Dataset:
         return list(self._index)
 
     @property
-    def feats(self):
-        return list(self._feats)
+    def features(self):
+        return list(self._features)
 
     @property
     def targets(self):
         return list(self._targets)
 
     @property
-    def predicts(self):
-        return list(self._predicts)
+    def predictions(self):
+        return list(self._predictions)
 
     @property
     def othercols(self):
@@ -55,7 +55,7 @@ class Dataset:
             col for col in self._df.columns
             if not any([
                 col in getattr(self, f'_{role}') 
-                for role in ['index', 'feats', 'targets', 'predicts']
+                for role in ['index', 'features', 'targets', 'predictions']
             ])
         ]
         return othercols
@@ -63,11 +63,11 @@ class Dataset:
     def get_col_roles(self):
         return {
             role: getattr(self, role)
-            for role in ['columns', 'index', 'feats', 'targets', 'predicts', 'othercols']
+            for role in ['columns', 'index', 'features', 'targets', 'predictions', 'othercols']
         }
 
     def _check_col_roles_consistent(self, **col_roles):
-        main_roles = ['index', 'feats', 'targets', 'predicts']
+        main_roles = ['index', 'features', 'targets', 'predictions']
         for role in main_roles + ['columns']:
             if role not in col_roles:
                 col_roles[role] = getattr(self, role)
@@ -89,5 +89,5 @@ class Dataset:
     # TODO: implement subscripting: ds['column'] (optimization)
     # TODO: docstrings
     # TODO: a list of assignable roles
-    # TODO: check for duplicates in index, feats, etc.
+    # TODO: check for duplicates in index, features, etc.
     # TODO: get role by column name
