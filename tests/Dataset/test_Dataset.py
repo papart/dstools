@@ -1,7 +1,7 @@
 import pytest
 from pandas.testing import assert_frame_equal
 from ...Dataset import Dataset
-
+from .fixtures_Dataset import *
 
 class TestDataset:
     
@@ -39,3 +39,22 @@ class TestDataset:
         role1, role2 = conflict_pair
         with pytest.raises(ValueError):
             ds = Dataset(df, **{role1: df.columns[:2], role2: df.columns[1:]})
+
+    def test_get_column(self, dataset):
+        df = dataset.df
+        for column in dataset.columns:
+            assert (df[column] == dataset[column]).all()
+
+    @pytest.mark.parametrize('key',
+        [
+            ['feat0', 'feat1'],
+            set(['feat0', 'feat1']),
+        ]
+    )
+    def test_xfail_get_many_columns(self, dataset, key):
+        with pytest.raises(TypeError):
+            x = dataset[key]
+
+    def test_xfail_get_column_not_exist(self, dataset):
+        with pytest.raises(KeyError):
+            x = dataset['SomeNotExistingColumn']        
