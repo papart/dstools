@@ -89,6 +89,8 @@ class Dataset:
     def __getitem__(self, key):
         if not isinstance(key, str):
             raise TypeError("Indexing key must be a string")
+        if key not in self.columns:
+            raise KeyError(f"There is no column '{key}' in the dataset")
         # TODO: write tests on this functionality
         return self._df[key].copy()
 
