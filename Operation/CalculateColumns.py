@@ -5,7 +5,8 @@ import pandas as pd
 class CalculateColumns(OperationInterface):
     def __init__(self, expressions, roles=None, name='CalculateColumn'):
         # expressions - dict(column_name: value).
-        # value is either a pd.Series, or a function: fn(ds: Dataset) -> pd.Series
+        # value can be a pd.Series, convertable to pd.Series, 
+        # or a function: fn(ds: Dataset) returning pd.Series or convertable to pd.Series
         self.expressions = expressions
         self.roles = roles
         super().__init__(name=name)
@@ -15,10 +16,7 @@ class CalculateColumns(OperationInterface):
         for column, expr in self.expressions.items():
             if callable(expr):
                 expr = expr(ds) # calculate on the old (!) dataframe
-            if not isinstance(expr, pd.Series):
-                raise TypeError(
-                    f"Calculated expression for column {column} has type {type(expr)}, "
-                    "but must be a pandas Series")
+            # TODO: add check for type of expr
             df_new[column] = expr
         new_col_roles = self._get_new_col_roles(ds)
         return self._recreate_dataset(ds, df=df_new, **new_col_roles)
