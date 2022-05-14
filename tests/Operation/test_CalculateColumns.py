@@ -1,6 +1,7 @@
 import numpy as np
+import pytest
 from ...Operation import CalculateColumns
-from .fixtures import *
+from ..Dataset.fixtures_Dataset import *
 
 
 class TestCalculateColumns:

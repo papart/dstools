@@ -1,8 +1,7 @@
 import pytest
 from pandas.testing import assert_frame_equal
 from ...Operation import OperationInterface
-from .fixtures import *
-
+from ..Dataset.fixtures_Dataset import *
 
 class DummyOperation(OperationInterface):
 
